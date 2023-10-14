@@ -10,11 +10,11 @@ DHT_Async dht_sensor(DHT_SENSOR_PIN, DHT_SENSOR_TYPE);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 #include "LedControlMS.h"
- //pin 8 is connected to the DataIn
- //pin 10 is connected to the CLK
- //pin 9 is connected to LOAD
+ //pin 0 is connected to the DataIn
+ //pin 2 is connected to the CLK
+ //pin 1 is connected to LOAD
 #define NBR_MTX 1
-LedControl lc=LedControl(8,10, 9, NBR_MTX);//
+LedControl lc=LedControl(0,2,1, NBR_MTX);
 
 void setup() {
     Serial.begin(9600);
