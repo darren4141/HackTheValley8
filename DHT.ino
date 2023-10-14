@@ -58,7 +58,7 @@ void loop() {
         lcd.print("%");
 
         int rows = humidity/12.5;
-
+        lc.clearDisplay(0);
         for(int i = 0; i < rows; i++){
             lc.setRow(0, i, 1023);
         }
