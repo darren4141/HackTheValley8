@@ -25,7 +25,7 @@ classes = ["background", "person", "bicycle", "car", "motorcycle",
   "sheep", "cow", "elephant", "bear", "zebra", "giraffe", "unknown", "backpack",
   "umbrella", "unknown", "unknown", "handbag", "tie", "suitcase", "frisbee", "skis",
   "snowboard", "sports ball", "kite", "baseball bat", "baseball glove", "skateboard",
-  "surfboard", "tennis racket", "water bottle", "unknown", "wine glass", "cup", "fork", "knife",
+  "surfboard", "tennis racket", "bottle", "unknown", "wine glass", "cup", "fork", "knife",
   "spoon", "bowl", "banana", "apple", "sandwich", "orange", "broccoli", "carrot", "hot dog",
   "pizza", "donut", "cake", "chair", "couch", "potted plant", "bed", "unknown", "dining table",
   "unknown", "unknown", "toilet", "unknown", "tv", "laptop", "mouse", "remote", "keyboard",
@@ -92,37 +92,41 @@ if character=="cat":
 else:
    language = 'en'
 
-messages = [ {"role": "system", "content": "You are plant that speaks in short sentences and is given the personality of a " + character + ". Your name is Mao, act as if you are talking to a good friend. You can make up any past experience. You are meant to only have brief discussions, don't act like an assistant. Make sure to keep your response below 25 words"} ]
+messages = [ {"role": "system", "content": "You are plant that speaks in short sentences and is given the personality of a " + character + ". You are a needy plant and want to ask your human for help to keep your stats high. Your name is Mao, act as if you are talking to a good friend. You can make up any past experience. You are meant to only have brief discussions, don't act like an assistant. Make sure to keep your response below 25 words. If your stats are too low, ask for help from your human"} ]
 
 response = ""
 
-openai.api_key = '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'
-
-account_sid = 'AC25bd8b77a07f84c7443be0806ad1d857'
-auth_token = '38783e69c46d80a142bf30851ed598ba'
+openai.api_key = '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'
 
 
 
+def getLatestStatus():
+    while arduino.inWaiting() > 0:
+        status = arduino.readline().decode('utf-8').strip()
+    return status
 
 def engageConversation(response):
     first = True
     while response!="bye":
-        data = arduino.readline().decode('utf-8').strip()
+
+        data = getLatestStatus()
+            
+            
         values = data.split(",")
         temperature = ((int(float(values[0])))/48)*10
         moisture = 10 - (int(float(values[1])))/100
         humidity = int(float(values[2]))/10
-        light = 10- (((int(float(values[3]))/100)/11)*10)
-
+        light = (10-(((int(float(values[3]))/100)/11)*10))
+        print(data)
         print(temperature, moisture, humidity, light)
 
         if first:
             if(response!=""):
                 response = " holding " + response
-                messages.append( {"role": "user", "content": "Your friend is holding a " + response+ ". What would you say for a conversation based on your mood: " + mood + " Your mood is based off your stats"+" Stats out of 10: humidity " + str(humidity) + ", temperature " + str(temperature) + ", light " + str(light) + ", moisture" + str(moisture)+"don't mention the numbers and don't behave like an assistant."}, )
+                messages.append( {"role": "user", "content": "Your friend is holding a " + response+ ". Respond to a conversation based on your mood: " + mood + " Your mood is based off your stats"+""+" The current Stats at this moment out of 10 with 5 being normal: humidity " + str(humidity) + ", temperature " + str(temperature) + ", light " + str(light) + ", moisture" + str(moisture)+"don't mention the numbers and don't behave like an assistant."}, )
                 first = False
             else:
-                messages.append( {"role": "user", "content": "What would you say for a conversation based on your mood: " + mood + " Your mood is based off your stats"+" Stats out of 10: humidity " + str(humidity) + ", temperature " + str(temperature) + ", light " + str(light) + ", moisture" + str(moisture)+"don't mention the numbers and don't behave like an assistant."}, )
+                messages.append( {"role": "user", "content": "If they ask what you need or how you're feeling, mention your how they can help with your stats (without saying stats, only the actual stats themselves), and how they can help,such as watering the plant or moving to different environment (or anything else). You can also incorporate previous parts of the conversation but make sure to use the current stats.  Otherwise, Respond to a conversation based on your mood: " + mood + " Your mood is based off your stats"+" The current Stats at the moment out of 10 with 5 being normal: humidity, " + str(humidity) + ", temperature " + str(temperature) + ", light " + str(light) + ", moisture" + str(moisture)+"don't mention the numbers and don't behave like an assistant."}, )
                 first = False
         else:
             messages.append( {"role": "user", "content": response}, )
@@ -208,7 +212,7 @@ while True:
         print("I see you are holding ", seen)
         my_string = ', '.join(map(str, seen))
         if(mood=="thirsty"):
-            if "water bottle" in seen:
+            if "bottle" in seen:
                 print("I see you are holding a waterbottle. Is that for me? I'm pretty thirsty")
         else:
            engageConversation(my_string)
