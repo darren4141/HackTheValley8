@@ -28,7 +28,7 @@ void setup() {
 	  lcd.backlight();
 	  lcd.print("Hello");
     lcd.setCursor(0,1);
-    lcd.print("Moisture Sensor");
+    lcd.print("moisture Sensor");
     for (int i=0; i< NBR_MTX; i++){
         lc.shutdown(i,false);
         lc.setIntensity(i,8);
@@ -40,7 +40,7 @@ void setup() {
 }
  
 void loop() {
-    int Moisture;
+    int moisture;
     float temperature;
     float humidity;
     int light;
@@ -48,7 +48,7 @@ void loop() {
     if (measure_environment(&temperature, &humidity)) {
         lcd.clear();
 
-        Moisture = analogRead(Moisture_signal);
+        moisture = analogRead(Moisture_signal);
         light = analogRead(pinLDR);
         lcd.setCursor(0,0);
         lcd.print("T: ");
@@ -62,7 +62,7 @@ void loop() {
 
         lcd.setCursor(9, 0);
         lcd.print("M: ");
-        lcd.print(Moisture);
+        lcd.print(moisture);
 
         lcd.setCursor(9, 1);
         lcd.print("L: ");
@@ -71,12 +71,12 @@ void loop() {
         //((value-min)/(max-min))*8
 
         // int rowsT = round((float)((temperature/26)*8));
-        // int rowsM = round((float)((Moisture-1024)/(400-1024)*8));
+        // int rowsM = round((float)((moisture-1024)/(400-1024)*8));
         // int rowsH = round((float)((humidity/60)*8));
         // int rowsL = round((float)((light-900)/(600-900)*8));
 
         double rowsT = (temperature/26)*8;
-        double rowsM = (Moisture-1024)/(400-1024)*8;
+        double rowsM = (moisture-1024)/(400-1024)*8;
         double rowsH = (humidity/60)*8;
         double rowsL = 8-(light/200);
 
@@ -98,10 +98,7 @@ void loop() {
             lc.setLed(0, i, 1, 1);
             lc.setLed(0, i, 0, 1);        
         }
-
-        Serial.println(light);
-        Serial.println((light-900)/(600-900));
-        Serial.println(rowsL);
+        Serial.print(temperature + "," + moisture + "," + humidity + "," + light);
     }
 }
 
