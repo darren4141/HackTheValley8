@@ -44,11 +44,9 @@ void setup() {
     for (int i=0; i< NBR_MTX; i++){
         lc.shutdown(i,false);
         lc.setIntensity(i,8);
-        lc.clearDisplay(i);
     }
-
+    lcLogo();
     delay(1000);
-
 }
  
 void loop(){
@@ -271,5 +269,17 @@ lcd.setCursor(13, 0);
 lcd.write(byte(2));
 lcd.setCursor(14, 0);
 lcd.write(byte(3));
+}
+
+void lcLogo(){
+  lc.setLed(0, 0, 0, 1);
+  lc.setLed(0, 2, 6, 1);
+  lc.setLed(0, 3, 4, 1);
+  lc.setLed(0, 2, 4, 1);
+  lc.setLed(0, 1, 7, 1);
+  lc.setLed(0, 7, 7, 1);
+  lc.setLed(0, 3, 5, 1);
+  lc.setLed(0, 0, 5, 1);
+  lc.setLed(0, 5, 2, 1);
 
 }
