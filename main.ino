@@ -70,35 +70,45 @@ void loop() {
         
         //((value-min)/(max-min))*8
 
-        // int rowsT = round((float)((temperature/26)*8));
-        // int rowsM = round((float)((moisture-1024)/(400-1024)*8));
-        // int rowsH = round((float)((humidity/60)*8));
-        // int rowsL = round((float)((light-900)/(600-900)*8));
+        int rowsT = round((double)((temperature/26)*8));
+        // int rowsM = round((double)((moisture-1024)/(400-1024)*8));
+        int rowsH = round((double)((humidity/60)*8));
+        // int rowsL = round((double)((light-900)/(600-900)*8));
+        
+        double diffM = 1024-moisture;
+        double diffL = 900-light;
 
-        double rowsT = (temperature/26)*8;
-        double rowsM = (moisture-1024)/(400-1024)*8;
-        double rowsH = (humidity/60)*8;
-        double rowsL = 8-(light/200);
+        double rowsM = (double)((diffM/624)*8);
+        double rowsL = (double)((diffL/400)*8);
+
+
 
         lc.clearDisplay(0);
 
         for(int i = 0; i < rowsT; i++){
-            lc.setLed(0, i, 7, 1);
-            lc.setLed(0, i, 6, 1);
+            lc.setLed(0, 0, i, 1);
+            lc.setLed(0, 1, i, 1);
         }
         for(int i = 0; i < rowsM; i++){
-            lc.setLed(0, i, 5, 1);
-            lc.setLed(0, i, 4, 1);
+            lc.setLed(0, 2, i, 1);
+            lc.setLed(0, 3, i, 1);
         }
         for(int i = 0; i < rowsH; i++){
-            lc.setLed(0, i, 3, 1);
-            lc.setLed(0, i, 2, 1);        
+            lc.setLed(0, 4, i, 1);
+            lc.setLed(0, 5, i, 1);        
         }
         for(int i = 0; i < rowsL; i++){
-            lc.setLed(0, i, 1, 1);
-            lc.setLed(0, i, 0, 1);        
+            lc.setLed(0, 6, i, 1);
+            lc.setLed(0, 7, i, 1);        
         }
-        Serial.print(temperature + "," + moisture + "," + humidity + "," + light);
+
+        Serial.print(temperature);
+        Serial.print(",");
+        Serial.print(moisture);
+        Serial.print(",");
+        Serial.print(humidity);
+        Serial.print(",");
+        Serial.print(light);
     }
 }
 
