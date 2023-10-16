@@ -48,9 +48,9 @@ void setup() {
     lcd.begin();
 	  // Turn on the blacklight and print a message.
 	  lcd.backlight();
-	  lcd.print("Hello");
+	  lcd.print("Welcome");
     lcd.setCursor(0,1);
-    lcd.print("PROJECT NAME");
+    lcd.print("Botanical Bestie");
     for (int i=0; i< NBR_MTX; i++){
         lc.shutdown(i,false);
         lc.setIntensity(i,8);
@@ -279,14 +279,14 @@ void angryFace() {
 }
 
 void lcLogo(){
-  lc.setLed(0, 0, 0, 1);
-  lc.setLed(0, 2, 6, 1);
-  lc.setLed(0, 3, 4, 1);
+  lc.setLed(0, 1, 2, 1);
+  lc.setLed(0, 2, 1, 1);
+  lc.setLed(0, 3, 1, 1);
+  lc.setLed(0, 4, 1, 1);
+  lc.setLed(0, 5, 1, 1);
+  lc.setLed(0, 6, 2, 1);
   lc.setLed(0, 2, 4, 1);
-  lc.setLed(0, 1, 7, 1);
-  lc.setLed(0, 7, 7, 1);
-  lc.setLed(0, 3, 5, 1);
-  lc.setLed(0, 0, 5, 1);
-  lc.setLed(0, 5, 2, 1);
-
+  lc.setLed(0, 2, 5, 1);
+  lc.setLed(0, 5, 4, 1);
+  lc.setLed(0, 5, 5, 1);
 }
